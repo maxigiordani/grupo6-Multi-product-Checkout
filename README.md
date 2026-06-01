@@ -8,13 +8,12 @@ Suite de tests automatizados sobre **DemoBlaze** usando Playwright.
 
 ## Integrantes
 
-> Completen con los nombres de su grupo:
 
-- Nombre Apellido
-- Nombre Apellido
-- Nombre Apellido
+- Mauro Coniglio
+- Maximiliano Giordani
+- Stefan Dios Marayin 
 
-**Grupo N - Seccion asignada:** (ej: Cart Management)
+**Grupo N°6-Multi-product-Checkout
 
 ---
 
