@@ -7,7 +7,7 @@ test('TC04 - completar checkout con multiples productos', async ({ page }) => {
     'Sony vaio i5',
   ];
 
-  // Agregar productos
+
   for (const producto of productos) {
     await page.goto('/');
 
@@ -27,18 +27,17 @@ test('TC04 - completar checkout con multiples productos', async ({ page }) => {
     await page.waitForTimeout(1500);
   }
 
-  // Ir al carrito
+
   await page.locator('#cartur').click();
 
-  // Validar que existen los productos
+
   await expect(page.locator('#tbodyid tr')).toHaveCount(3);
 
-  // Abrir checkout
+
   await page.getByRole('button', {
     name: 'Place Order',
   }).click();
 
-  // Completar formulario
   await page.locator('#name').fill('Maximiliano Giordani');
   await page.locator('#country').fill('Argentina');
   await page.locator('#city').fill('Tucuman');
@@ -46,19 +45,19 @@ test('TC04 - completar checkout con multiples productos', async ({ page }) => {
   await page.locator('#month').fill('08');
   await page.locator('#year').fill('2025');
 
-  // Comprar
+  
   await page.getByRole('button', {
     name: 'Purchase',
   }).click();
 
-  // Validar compra exitosa
+ 
   await expect(
     page.getByRole('heading', {
       name: 'Thank you for your purchase!',
     })
   ).toBeVisible();
 
-  // Validar que exista información de la orden
+
   await expect(
     page.locator('.sweet-alert')
   ).toContainText('Id');
@@ -67,7 +66,7 @@ test('TC04 - completar checkout con multiples productos', async ({ page }) => {
     page.locator('.sweet-alert')
   ).toContainText('Amount');
 
-  // Cerrar mensaje
+
   await page.getByRole('button', {
     name: 'OK',
   }).click();
