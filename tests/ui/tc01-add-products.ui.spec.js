@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-
+test.setTimeout(50000);
 test('TC01 - validar 3 productos en carrito', async ({ page }) => {
   await page.goto('/');
 

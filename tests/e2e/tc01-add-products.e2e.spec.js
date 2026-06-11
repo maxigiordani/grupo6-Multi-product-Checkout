@@ -6,10 +6,6 @@ test('TC01 - Agregar 3 productos distintos al carrito (API + UI)', async ({
   request,
   page,
 }) => {
-  // ========================================
-  // FASE 1: API
-  // ========================================
-
   const cookie = `user-${Date.now()}`;
 
   const productosAPI = [1, 2, 8];
@@ -28,7 +24,7 @@ test('TC01 - Agregar 3 productos distintos al carrito (API + UI)', async ({
 
     expect(response.status()).toBe(200);
 
-    console.log(`✅ Producto ${prod_id} agregado por API`);
+    console.log(`Producto ${prod_id} agregado por API`);
   }
 
   const carritoResponse = await request.post(`${API}/viewcart`, {
@@ -42,16 +38,9 @@ test('TC01 - Agregar 3 productos distintos al carrito (API + UI)', async ({
 
   const carrito = await carritoResponse.json();
 
-  console.log(
-    '🛒 Productos encontrados por API:',
-    carrito.Items.length
-  );
+  console.log('Productos encontrados por API:', carrito.Items.length);
 
   expect(carrito.Items.length).toBe(3);
-
-  // ========================================
-  // FASE 2: LOGIN UI
-  // ========================================
 
   console.log('===== UI =====');
 
@@ -69,63 +58,48 @@ test('TC01 - Agregar 3 productos distintos al carrito (API + UI)', async ({
 
   await page.waitForTimeout(2000);
 
-  await expect(page.locator('#nameofuser')).toContainText(
-    `Welcome ${usuario}`
-  );
+  await expect(page.locator('#nameofuser')).toContainText(`Welcome ${usuario}`);
 
-  console.log(`✅ Login exitoso como ${usuario}`);
+  console.log(`Login exitoso como ${usuario}`);
 
-  // ========================================
-  // FASE 3: AGREGAR PRODUCTOS POR UI
-  // ========================================
-
-  const productosUI = [
-    'Samsung galaxy s6',
-    'Nokia lumia 1520',
-    'Sony vaio i5',
-  ];
+  const productosUI = ['Samsung galaxy s6', 'Nokia lumia 1520', 'Sony vaio i5'];
 
   for (const producto of productosUI) {
     await page.goto('/');
 
-    await page.getByRole('link', {
-      name: producto,
-      exact: true,
-    }).click();
+    await page
+      .getByRole('link', {
+        name: producto,
+        exact: true,
+      })
+      .click();
 
     page.once('dialog', async (dialog) => {
       await dialog.accept();
     });
 
-    await page.getByRole('link', {
-      name: 'Add to cart',
-    }).click();
+    await page
+      .getByRole('link', {
+        name: 'Add to cart',
+      })
+      .click();
 
-    console.log(`✅ Producto agregado por UI: ${producto}`);
+    console.log(`Producto agregado por UI: ${producto}`);
 
-    // para que se vea en la demo
     await page.waitForTimeout(2000);
   }
-
-  // ========================================
-  // FASE 4: VALIDAR CARRITO UI
-  // ========================================
 
   await page.locator('#cartur').click();
 
   await page.waitForTimeout(3000);
 
-  await expect(page.locator('#tbodyid'))
-    .toContainText('Samsung galaxy s6');
+  await expect(page.locator('#tbodyid')).toContainText('Samsung galaxy s6');
 
-  await expect(page.locator('#tbodyid'))
-    .toContainText('Nokia lumia 1520');
+  await expect(page.locator('#tbodyid')).toContainText('Nokia lumia 1520');
 
-  await expect(page.locator('#tbodyid'))
-    .toContainText('Sony vaio i5');
+  await expect(page.locator('#tbodyid')).toContainText('Sony vaio i5');
 
-  console.log('✅ Los 3 productos aparecen en el carrito');
+  console.log('Los 3 productos aparecen en el carrito');
 
-  // dejar abierto unos segundos para mostrar
   await page.waitForTimeout(10000);
 });
