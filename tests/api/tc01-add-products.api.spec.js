@@ -3,8 +3,9 @@ const { API, generarUsuario } = require('../helpers');
 
 const PRODUCTOS = [1, 2, 3];
 
-test('TC02 | API - Agregar 3 productos distintos al carrito', async ({ request }) => {
-  
+test('TC02 | API - Agregar 3 productos distintos al carrito', async ({
+  request,
+}) => {
   const usuario = generarUsuario();
   await request.post(`${API}/signup`, { data: usuario });
 
@@ -12,14 +13,13 @@ test('TC02 | API - Agregar 3 productos distintos al carrito', async ({ request }
   const texto = await loginRes.text();
   const token = texto.match(/Auth_token:\s*(\S+)/)[1].replace(/"/g, '');
 
-
   for (const prodId of PRODUCTOS) {
     const res = await request.post(`${API}/addtocart`, {
       data: {
-        id:      String(Date.now()),
-        cookie:  token,
+        id: String(Date.now()),
+        cookie: token,
         prod_id: prodId,
-        flag:    true,
+        flag: true,
       },
     });
 
@@ -34,8 +34,7 @@ test('TC02 | API - Agregar 3 productos distintos al carrito', async ({ request }
   expect(cartRes.status()).toBe(200);
 
   const cartData = await cartRes.json();
-  console.log('Respuesta del carrito:', JSON.stringify(cartData, null, 2)); 
-
+  console.log('Respuesta del carrito:', JSON.stringify(cartData, null, 2));
 
   const items = cartData.Items ?? cartData;
 
