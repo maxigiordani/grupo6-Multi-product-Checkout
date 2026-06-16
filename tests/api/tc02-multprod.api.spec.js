@@ -85,5 +85,5 @@ test('Flujo E2E: Crear usuario, loguear y validar carrito vacío', async ({
 
   const carrito2 = await cartResponse2.json();
   console.log('Contenido del carrito después de agregar productos:', carrito2);
-  await page.pause();
+
 });
