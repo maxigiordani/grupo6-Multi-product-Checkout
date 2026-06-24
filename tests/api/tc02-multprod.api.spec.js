@@ -8,9 +8,12 @@ test('Flujo E2E Refactorizado: Crear usuario, loguear y validar carrito', async 
   request,
 }) => {
   const username = `user_${Date.now()}`;
-  const password = 'bootcamp123';
+  const passwordPlano = 'bootcamp123';
+
+  const password = Buffer.from(passwordPlano).toString('base64');
 
   console.log(`Registrando usuario: ${username}`);
+  console.log(`Contraseña cifrada (Base64) que se enviará: ${password}`);
 
   const signupResponse = await request.post(`${BASE_URL}/signup`, {
     data: { username, password },
