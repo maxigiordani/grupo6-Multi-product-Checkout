@@ -55,5 +55,5 @@ test('Flujo E2E UI: Crear usuario, loguear y validar carrito', async ({
 
   console.log('¡Flujo visual completado con éxito!');
 
-  await page.pause();
+
 });
